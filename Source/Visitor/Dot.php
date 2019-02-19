@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -42,9 +44,6 @@ use Hoa\Visitor;
  * Class \Hoa\Tree\Visitor\Dot.
  *
  * Transform a tree in DOT language.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Dot extends Generic implements Visitor\Visit
 {
@@ -59,17 +58,12 @@ class Dot extends Generic implements Visitor\Visit
 
     /**
      * Visit an element.
-     *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                &$handle     Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  string
      */
     public function visit(
         Visitor\Element $element,
         &$handle = null,
         $eldnah  = null
-    ) {
+    ): string {
         $ou  = null;
         $t   = null;
 

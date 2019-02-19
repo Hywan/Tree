@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -42,9 +44,6 @@ use Hoa\Visitor;
  * Class \Hoa\Tree\Visitor\Dump.
  *
  * Dump a tree.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Dump extends Generic implements Visitor\Visit
 {
@@ -59,11 +58,8 @@ class Dump extends Generic implements Visitor\Visit
 
     /**
      * Just change the default transversal order value.
-     *
-     * @param   int     $order    Traversal order (please, see the * self::*_ORDER
-     *                            constants).
      */
-    public function __construct($order = parent::IN_ORDER)
+    public function __construct(int $order = parent::IN_ORDER)
     {
         parent::__construct($order);
 
@@ -72,17 +68,12 @@ class Dump extends Generic implements Visitor\Visit
 
     /**
      * Visit an element.
-     *
-     * @param   \Hoa\Visitor\Element  $element    Element to visit.
-     * @param   mixed                 &$handle    Handle (reference).
-     * @param   mixed                 $eldnah     Handle (not reference).
-     * @return  string
      */
     public function visit(
         Visitor\Element $element,
         &$handle = null,
         $eldnah  = null
-    ) {
+    ): string {
         $pre    = null;
         $in     = '> ' . str_repeat('  ', $this->_i) . $element->getValue() . "\n";
         $post   = null;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -42,21 +44,14 @@ use Hoa\Consistency;
  * Class \Hoa\Tree.
  *
  * Manipule a tree.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Tree extends Generic
 {
     /**
      * Insert a child.
      * Fill the child list from left to right.
-     *
-     * @param   \Hoa\Tree  $child    Child to insert.
-     * @return  \Hoa\Tree
-     * @throws  \Hoa\Tree\Exception
      */
-    public function insert(Generic $child)
+    public function insert(self $child): self
     {
         if (!($child instanceof self)) {
             throw new Exception(
@@ -73,12 +68,8 @@ class Tree extends Generic
 
     /**
      * Delete a child.
-     *
-     * @param   mixed   $nodeId    Node ID.
-     * @return  \Hoa\Tree\Generic
-     * @throws  \Hoa\Tree\Exception
      */
-    public function delete($nodeId)
+    public function delete($nodeId): self
     {
         unset($this->_childs[$nodeId]);
 
@@ -87,20 +78,16 @@ class Tree extends Generic
 
     /**
      * Check if the node is a leaf.
-     *
-     * @return  bool
      */
-    public function isLeaf()
+    public function isLeaf(): bool
     {
         return empty($this->_childs);
     }
 
     /**
      * Check if the node is a node (i.e. not a leaf).
-     *
-     * @return  bool
      */
-    public function isNode()
+    public function isNode(): bool
     {
         return !empty($this->_childs);
     }
@@ -109,4 +96,4 @@ class Tree extends Generic
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\Tree\Tree');
+Consistency::flexEntity(Tree::class);

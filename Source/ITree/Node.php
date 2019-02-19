@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -40,9 +42,6 @@ namespace Hoa\Tree\ITree;
  * Interface \Hoa\Tree\ITree\Node.
  *
  * Interface for tree nodes.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 interface Node
 {
@@ -58,5 +57,5 @@ interface Node
      *
      * @return  string
      */
-    public function __toString();
+    public function __toString() : string;
 }

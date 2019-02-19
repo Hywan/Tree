@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -42,9 +44,6 @@ use Hoa\Visitor;
  * Class \Hoa\Tree\Generic.
  *
  * Here is an abstract tree.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 abstract class Generic
     implements Visitor\Element,
@@ -68,9 +67,7 @@ abstract class Generic
 
 
     /**
-     * Build a node. It can be a root, a node or a leaf of course.
-     *
-     * @param   mixed   $value    Node value.
+     * Build a node. It can be a root, a node or a leaf.
      */
     public function __construct($value = null)
     {
@@ -81,11 +78,8 @@ abstract class Generic
 
     /**
      * Set the node value.
-     *
-     * @param   mixed   $value    Node value.
-     * @return  mixed
      */
-    public function setValue($value)
+    public function setValue($value): ?ITree\Node
     {
         if (!($value instanceof ITree\Node)) {
             $value = new SimpleNode(md5($value), $value);
@@ -99,18 +93,14 @@ abstract class Generic
 
     /**
      * Get the node value.
-     *
-     * @return  \Hoa\Tree\ITree\Node
      */
-    public function getValue()
+    public function getValue(): ?ITree\Node
     {
         return $this->_value;
     }
 
     /**
      * Get the current child for the iterator.
-     *
-     * @return  \Hoa\Tree\Generic
      */
     public function current()
     {
@@ -119,8 +109,6 @@ abstract class Generic
 
     /**
      * Get the current child id for the iterator.
-     *
-     * @return  int
      */
     public function key()
     {
@@ -129,8 +117,6 @@ abstract class Generic
 
     /**
      * Advance the internal child pointer, and return the current child.
-     *
-     * @return  \Hoa\Tree\Generic
      */
     public function next()
     {
@@ -139,8 +125,6 @@ abstract class Generic
 
     /**
      * Rewind the internal child pointer, and return the first child.
-     *
-     * @return  \Hoa\Tree\Generic
      */
     public function rewind()
     {
@@ -150,10 +134,8 @@ abstract class Generic
     /**
      * Check if there is a current element after calls to the rewind or the next
      * methods.
-     *
-     * @return  bool
      */
-    public function valid()
+    public function valid() : bool
     {
         if (empty($this->_collection)) {
             return false;
@@ -175,9 +157,6 @@ abstract class Generic
 
     /**
      * Seek to a position.
-     *
-     * @param   mixed   $position    Position to seek.
-     * @return  void
      */
     public function seek($position)
     {
@@ -196,22 +175,16 @@ abstract class Generic
 
     /**
      * Count number of elements in collection.
-     *
-     * @return  int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_childs);
     }
 
     /**
      * Get a specific child.
-     *
-     * @param   mixed   $nodeId    Node ID.
-     * @return  \Hoa\Tree\Generic
-     * @throws  \Hoa\Tree\Exception
      */
-    public function getChild($nodeId)
+    public function getChild($nodeId): self
     {
         if (false === $this->childExists($nodeId)) {
             throw new Exception('Child %s does not exist.', 0, $nodeId);
@@ -222,21 +195,16 @@ abstract class Generic
 
     /**
      * Get all childs.
-     *
-     * @return  array
      */
-    public function getChilds()
+    public function getChilds(): array
     {
         return $this->_childs;
     }
 
     /**
      * Check if a child exists.
-     *
-     * @param   mixed   $nodeId    Node ID.
-     * @return  bool
      */
-    public function childExists($nodeId)
+    public function childExists($nodeId): bool
     {
         return array_key_exists($nodeId, $this->getChilds());
     }
@@ -244,43 +212,26 @@ abstract class Generic
     /**
      * Insert a child.
      * Fill the child list from left to right.
-     *
-     * @param   \Hoa\Tree\Generic  $child    Child to insert.
-     * @return  \Hoa\Tree\Generic
-     * @throws  \Hoa\Tree\Exception
      */
-    abstract public function insert(Generic $child);
+    abstract public function insert(Generic $child): self;
 
     /**
      * Delete a child.
-     *
-     * @param   int     $i    Child index.
-     * @return  \Hoa\Tree\Generic
-     * @throws  \Hoa\Tree\Exception
      */
-    abstract public function delete($i);
+    abstract public function delete($nodeId): self;
 
     /**
      * Check if the node is a leaf.
-     *
-     * @return  bool
      */
-    abstract public function isLeaf();
+    abstract public function isLeaf(): bool;
 
     /**
      * Check if the node is a node (i.e. not a leaf).
-     *
-     * @return  bool
      */
-    abstract public function isNode();
+    abstract public function isNode(): bool;
 
     /**
      * Accept a visitor.
-     *
-     * @param   \Hoa\Visitor\Visit  $visitor    Visitor.
-     * @param   mixed              &$handle     Handle (reference).
-     * @param   mixed               $eldna      Handle (not reference).
-     * @return  mixed
      */
     public function accept(
         Visitor\Visit $visitor,

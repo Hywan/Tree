@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -40,9 +42,6 @@ namespace Hoa\Tree\Visitor;
  * Class \Hoa\Tree\Visitor\Generic.
  *
  * Abstract tree visitor.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 abstract class Generic
 {
@@ -78,11 +77,8 @@ abstract class Generic
 
     /**
      * Build the visitor and set the traversal order.
-     *
-     * @param   int     $order    Traversal order (please, see the self::*_ORDER
-     *                            constants).
      */
-    public function __construct($order = self::PRE_ORDER)
+    public function __construct(int $order = self::PRE_ORDER)
     {
         $this->setOrder($order);
 
@@ -91,12 +87,8 @@ abstract class Generic
 
     /**
      * Set the traversal order.
-     *
-     * @param   int     $order    Traversal order (please, see the self::*_ORDER
-     *                            constants).
-     * @return  int
      */
-    protected function setOrder($order)
+    protected function setOrder(int $order): int
     {
         $old          = $this->_order;
         $this->_order = $order;
@@ -106,10 +98,8 @@ abstract class Generic
 
     /**
      * Get the traversal order.
-     *
-     * @return  int
      */
-    public function getOrder()
+    public function getOrder(): int
     {
         return $this->_order;
     }

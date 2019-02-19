@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -40,9 +42,6 @@ namespace Hoa\Tree;
  * Class \Hoa\Tree\SimpleNode.
  *
  * It's just a simple node demo (may be used for example and test).
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class SimpleNode implements ITree\Node
 {
@@ -56,7 +55,7 @@ class SimpleNode implements ITree\Node
     /**
      * Node value.
      *
-     * @var string
+     * @var ?string
      */
     protected $_value = null;
 
@@ -64,11 +63,8 @@ class SimpleNode implements ITree\Node
 
     /**
      * Build a node that contains a string.
-     *
-     * @param   string  $id       The node ID.
-     * @param   string  $value    The node value.
      */
-    public function __construct($id, $value = null)
+    public function __construct(string $id, ?string $value = null)
     {
         $this->setId($id);
         $this->setValue($value);
@@ -76,11 +72,8 @@ class SimpleNode implements ITree\Node
 
     /**
      * Set node ID.
-     *
-     * @param   string     $id    The node ID.
-     * @return  string
      */
-    protected function setId($id)
+    protected function setId(string $id): ?string
     {
         $old       = $this->_id;
         $this->_id = $id;
@@ -89,12 +82,17 @@ class SimpleNode implements ITree\Node
     }
 
     /**
-     * Set node value.
-     *
-     * @param   string  $value    The node value.
-     * @return  string
+     * Get node ID, must be implement because of interface.
      */
-    public function setValue($value = null)
+    public function getId(): ?string
+    {
+        return $this->_id;
+    }
+
+    /**
+     * Set node value.
+     */
+    public function setValue(?string $value): ?string
     {
         $old          = $this->_value;
         $this->_value = $value;
@@ -103,31 +101,17 @@ class SimpleNode implements ITree\Node
     }
 
     /**
-     * Get node ID, must be implement because of interface.
-     *
-     * @return  string
-     */
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    /**
      * Get node value.
-     *
-     * @return  string
      */
-    public function getValue()
+    public function getValue(): ?string
     {
         return $this->_value;
     }
 
     /**
      * Get the node string representation.
-     *
-     * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->getValue();
     }

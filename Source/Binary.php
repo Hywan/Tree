@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -40,21 +42,14 @@ namespace Hoa\Tree;
  * Class \Hoa\Tree\Binary.
  *
  * Manipulate a binary tree.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Binary extends Generic
 {
     /**
      * Insert a child.
      * Fill the child list from left to right.
-     *
-     * @param   \Hoa\Tree\Generic  $child    Child to insert.
-     * @return  \Hoa\Tree\Generic
-     * @throws  \Hoa\Tree\Exception
      */
-    public function insert(Generic $child)
+    public function insert(self $child): self
     {
         if (!($child instanceof self)) {
             throw new Exception(
@@ -87,12 +82,8 @@ class Binary extends Generic
 
     /**
      * Insert the left child.
-     *
-     * @param   \Hoa\Tree\Binary  $child    Child to insert.
-     * @return  \Hoa\Tree\Binary
-     * @throws  \Hoa\Tree\Exception
      */
-    public function insertLeft(self $child)
+    public function insertLeft(self $child): self
     {
         if (false === $this->isSimpleLeft()) {
             throw new Exception('Left child is already set.', 2);
@@ -105,12 +96,8 @@ class Binary extends Generic
 
     /**
      * Insert the right child.
-     *
-     * @param   \Hoa\Tree\Binary  $child    Child to insert.
-     * @return  \Hoa\Tree\Binary
-     * @throws  \Hoa\Tree\Exception
      */
-    public function insertRight(self $child)
+    public function insertRight(self $child): self
     {
         if (true === $this->isSimpleRight()) {
             throw new Exception('Right child is already set.', 3);
@@ -123,13 +110,10 @@ class Binary extends Generic
 
     /**
      * Delete a child.
-     *
-     * @param   int     $i    Child index.
-     * @return  \Hoa\Tree\Binary
      */
-    public function delete($i)
+    public function delete($nodeId): self
     {
-        if ($i === 0) {
+        if ($nodeId === 0) {
             $this->_childs[0] = null;
 
             return $this;
@@ -142,20 +126,16 @@ class Binary extends Generic
 
     /**
      * Delete the left child.
-     *
-     * @return  \Hoa\Tree\Binary
      */
-    public function deleteLeft()
+    public function deleteLeft(): self
     {
         return $this->delete(0);
     }
 
     /**
      * Delete the right child.
-     *
-     * @return  \Hoa\Tree\Binary
      */
-    public function deleteRight()
+    public function deleteRight(): self
     {
         return $this->delete(1);
     }
@@ -163,10 +143,8 @@ class Binary extends Generic
     /**
      * Check if the node is simple left, i.e. if the left child is set and not
      * the right child.
-     *
-     * @return  bool
      */
-    public function isSimpleLeft()
+    public function isSimpleLeft(): bool
     {
         return
             null !== $this->getLeft() &&
@@ -176,10 +154,8 @@ class Binary extends Generic
     /**
      * Check if the node is simple right, i.e. if the right child is set and not
      * the left child.
-     *
-     * @return  bool
      */
-    public function isSimpleRight()
+    public function isSimpleRight(): bool
     {
         return
             null === $this->getLeft() &&
@@ -188,10 +164,8 @@ class Binary extends Generic
 
     /**
      * Check if the node is double, i.e. if left and right child are set.
-     *
-     * @return  bool
      */
-    public function isDouble()
+    public function isDouble(): bool
     {
         return
             null !== $this->getLeft() &&
@@ -200,10 +174,8 @@ class Binary extends Generic
 
     /**
      * Check if the node is a leaf.
-     *
-     * @return  bool
      */
-    public function isLeaf()
+    public function isLeaf(): bool
     {
         return
             null === $this->getLeft() &&
@@ -212,10 +184,8 @@ class Binary extends Generic
 
     /**
      * Check if the node is a noe (i.e. not a leaf).
-     *
-     * @return  bool
      */
-    public function isNode()
+    public function isNode(): bool
     {
         return
             null !== $this->getLeft() ||
@@ -224,10 +194,8 @@ class Binary extends Generic
 
     /**
      * Get the left child.
-     *
-     * @return  \Hoa\Tree\Binary
      */
-    public function getLeft()
+    public function getLeft(): ?self
     {
         if (array_key_exists(0, $this->_childs)) {
             return $this->_childs[0];
@@ -238,10 +206,8 @@ class Binary extends Generic
 
     /**
      * Get the right child.
-     *
-     * @return  \Hoa\Tree\Binary
      */
-    public function getRight()
+    public function getRight(): ?self
     {
         if (array_key_exists(1, $this->_childs)) {
             return $this->_childs[1];
@@ -252,12 +218,8 @@ class Binary extends Generic
 
     /**
      * Get a specific child (not the same behavior that other trees).
-     *
-     * @param   mixed   $nodeId    Node ID.
-     * @return  \Hoa\Tree\Binary
-     * @throws  \Hoa\Tree\Exception
      */
-    public function getChild($nodeId)
+    public function getChild($nodeId): self
     {
         if (false === $i = $this->_childExists($nodeId)) {
             throw new Exception('Child %s does not exist.', 0, $nodeId);
@@ -268,11 +230,8 @@ class Binary extends Generic
 
     /**
      * Check if a child exists.
-     *
-     * @param   mixed   $nodeId    Node ID.
-     * @return  bool
      */
-    public function childExists($nodeId)
+    public function childExists($nodeId): bool
     {
         return false !== $this->_childExist($nodeId);
     }
@@ -280,9 +239,6 @@ class Binary extends Generic
     /**
      * Check if a child exists, and return the child index (0 for left and 1 for
      * right).
-     *
-     * @param   mixed    $nodeId    Node ID.
-     * @return  mixed
      */
     private function _childExists($nodeId)
     {
