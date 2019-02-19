@@ -23,6 +23,7 @@
         "source": "https://central.hoa-project.net/Resource/Library/Tree"
     },
     "require": {
+        "php"            : ">=7.1",
         "hoa/consistency": "~1.0",
         "hoa/exception"  : "~1.0",
         "hoa/visitor"    : "~2.0"
